@@ -180,7 +180,7 @@ namespace toolbox {
 
 	}
 
-	void IOManager::WriteFlow( const cv::Mat & x, const cv::Mat & y, const int64_t id, const int64_t span_id ){
+	void IOManager::WriteFlow( const cv::Mat & x, const cv::Mat & y, const int64_t id, const int64_t span_id , std::string outputFNameX , std::string outputFNameY  ){
 		
 		if( serialize_ ){
 			if( archive_x_[span_id] )
@@ -191,10 +191,10 @@ namespace toolbox {
 		} else {
 			
 			if( flow_x_.size() )
-				cv::imwrite( CreateFilename( id, span_id, 1 ), x );
+				cv::imwrite( outputFNameX , x );
 
 			if( flow_y_.size() )
-				cv::imwrite( CreateFilename( id, span_id, 2 ), y );
+				cv::imwrite( outputFNameY , y );
 		}
 
 	}

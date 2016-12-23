@@ -84,7 +84,7 @@ namespace toolbox{
 
 
 			void WriteImg( const cv::Mat & img, const int64_t id );
-			void WriteFlow( const cv::Mat & x, const cv::Mat & y, const int64_t id, const int64_t span_id );
+			void WriteFlow( const cv::Mat & x, const cv::Mat & y, const int64_t id, const int64_t span_id , std::string outputFNameX , std::string outputFNameY  );
 
 			void sync();
 

@@ -20,7 +20,7 @@
 
 #include "common.hh"
 
-void ProcessClip( Video & v, toolbox::IOManager & io_manager, const int type, const int bound );
+void ProcessClip( std::string inFramesList , 	 std::string  xFrameLists ,  std::string yFrameLists  , toolbox::IOManager & io_manager, const int type, const int bound );
 void ComputeFlow( const cv::Mat prev, const cv::Mat cur, const int type, const int bound, cv::Mat & flow_x, cv::Mat & flow_y );
 
 #endif
