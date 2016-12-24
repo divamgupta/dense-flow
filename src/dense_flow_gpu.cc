@@ -1,6 +1,9 @@
 #include "dense_flow_gpu.hh"
 
 
+// ./denseFlow_gpu --inFramesList="/mnt/server3/home/divam14038/ego_multitask/data/raw/GTEA/pngList.list" --xFrameLists="/mnt/server3/home/divam14038/ego_multitask/data/raw/GTEA/flow_x.list" --yFrameLists="/mnt/server3/home/divam14038/ego_multitask/data/raw/GTEA/flow_y.list"
+
+
 #include <fstream>
 
 
@@ -21,6 +24,7 @@ int main(int argc, char** argv){
   serialize = false;
   #endif 
   
+  std::cout << "kkkkkkk \n " ; 
   // IO operation
   const cv::String keys =
   "{ f inFramesList     | | filename of video }"

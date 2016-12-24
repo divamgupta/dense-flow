@@ -19,7 +19,7 @@ class Video{
 
 		Video( std::string filename, int64_t skip, int64_t len ){
 			if( filename == "" ){
-				std::cerr << "No video file specified." << std::endl;
+				std::cerr << "No video file specified kkkkk ." << std::endl;
 				video_ = nullptr;
 				return;
 			}
