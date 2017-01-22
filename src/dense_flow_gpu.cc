@@ -10,7 +10,7 @@
 // Compute optical flow between frames t and t+steppings[*]
 const std::vector< int64_t > flow_span { 1 };
 
-
+int resize_first , resize_first_width ,  resize_first_height ;
 
 cv::Ptr<cv::cuda::FarnebackOpticalFlow> alg_farn;
 cv::Ptr<cv::cuda::OpticalFlowDual_TVL1> alg_tvl1;
@@ -37,6 +37,10 @@ int main(int argc, char** argv){
   "{ s step        | 1 | specify the step for frame sampling}"
   "{ o offset      | 0 | specify the offset from where to start}"
   "{ c clip        | 0 | specify maximum length of clip (0=no maximum)}"
+  "{ r resize_first        | 0 | 1 if you have to resize the cv image then compute flow and 0 if u wanna resie after calculating the flow }"
+  "{ r resize_first_width        | 0 | resize first width }"
+  "{ r resize_first_height        | 0 | resize first height }"
+
   ;
 
   cv::CommandLineParser cmd(argc, argv, keys);
@@ -51,6 +55,14 @@ int main(int argc, char** argv){
   int step                = cmd.get<int>("step");
   int offset              = cmd.get<int>("offset");
   int len_clip            = cmd.get<int>("clip");
+  resize_first            = cmd.get<int>("resize_first");
+  resize_first_width            = cmd.get<int>("resize_first_width");
+  resize_first_height            = cmd.get<int>("resize_first_height");
+  
+  if( resize_first_height <= 0 )
+    resize_first_height = DIM_Y ;
+  if( resize_first_width <= 0 )
+    resize_first_height = DIM_X ;
 
   if( !cmd.check() ){
     cmd.printErrors();
@@ -123,7 +135,10 @@ void ProcessClip( std::string inFramesList , 	 std::string  xFrameLists ,  std::
   std::cout << "\t" << std::flush;
   
   getline( input_inframes, line_inframes );
-    frame = cv::imread(line_inframes);
+  frame = cv::imread(line_inframes);
+  if( resize_first )
+      cv::resize( frame , frame, cv::Size( resize_first_width, resize_first_height ) );
+      
 
   while( true ){
     // v.read( clip, 1, true );
@@ -137,6 +152,8 @@ void ProcessClip( std::string inFramesList , 	 std::string  xFrameLists ,  std::
        		 break;
        		 
     frame = cv::imread(line_inframes);
+    if( resize_first )
+      cv::resize( frame , frame, cv::Size( resize_first_width, resize_first_height ) );
 
     if( ++counter % 50 == 0 )
       std::cout << " -- " << counter << std::flush;
